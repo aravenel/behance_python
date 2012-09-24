@@ -1,6 +1,6 @@
 from project import Project
 
-class Api:
+class API:
     """Base wrapper for the Behance api.
     
     Must be instantiated using your provided auth key."""
