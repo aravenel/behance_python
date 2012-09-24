@@ -33,4 +33,4 @@ class Project:
             for k, v in project_data.items():
                 self._add_property(k, v)
         else:
-            raise exceptions.BehanceException
+            raise exceptions.BehanceException(_results.status_code)
