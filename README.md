@@ -70,30 +70,33 @@ Works just like project_search.
 ```python
 user = behance.get_user(user_id_or_username)
 ```
+Returns User object. This object has attributes named identically to attributes
+as returned by Behance API. 
+
 
 ###Get User Projects
 ```python
 user_projects = user.get_projects(filter_key='filter_value')
 ```
-Can optionally include any filters supported by Behance API.
+Method of the User object. Can optionally include any filters supported by Behance API.
 
 ###Get User Works in Progress
 ```python
 user_wips = user.get_wips(filter_key='filter_value')
 ```
-Can optionally include any filters supported by Behance API.
+Method of the User object. Can optionally include any filters supported by Behance API.
 
 ###Get User Appreciations
 ```python
 user_appreciations = user.get_appreciations(filter_key='filter_value')
 ```
-Can optionally include any filters supported by Behance API.
+Method of the User object. Can optionally include any filters supported by Behance API.
 
 ###Get User Collections
 ```python
 user_collections = user.get_collections(filter_key='filter_value')
 ```
-Can optionally include any filters supported by Behance API.
+Method of the User object. Can optionally include any filters supported by Behance API.
 
 ##Work in Progress Functionality
 TBD.
