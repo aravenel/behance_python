@@ -29,17 +29,12 @@ behance = API('your_api_key_here')
 projects = behance.project_search('term1', 'term2', filter_key='filter_value')
 ```
 
-Supports all filters and modifiers as supported by Behance:
-- sort
-- time
-- field
-- country
-- state
-- page
-- tags
+Supports all filters and modifiers as supported by Behance.
 
 Data will be returned as list of dictionaries with same keys and data formats
-as Behance API.
+as Behance API. To save on API calls, these are not actual Project objects--you
+must call the API.get_project(project_id) method to get project details including
+images.
 
 ###Get Single Project Details
 ```python
@@ -79,12 +74,18 @@ as returned by Behance API.
 user_projects = user.get_projects(filter_key='filter_value')
 ```
 Method of the User object. Can optionally include any filters supported by Behance API.
+So as not to chew up API calls, these are not actual Project objects. To get 
+artwork associated with these projects, you will need to call the API.get_project(project_id)
+method.
 
 ###Get User Works in Progress
 ```python
 user_wips = user.get_wips(filter_key='filter_value')
 ```
 Method of the User object. Can optionally include any filters supported by Behance API.
+So as not to chew up API calls, these are not actual WIP objects. To get 
+artwork associated with these projects, you will need to call the API.get_WIP(wip_id)
+method.
 
 ###Get User Appreciations
 ```python
@@ -99,11 +100,38 @@ user_collections = user.get_collections(filter_key='filter_value')
 Method of the User object. Can optionally include any filters supported by Behance API.
 
 ##Work in Progress Functionality
-TBD.
+###Search for Works in Progress
+```python
+wips = behance.wips_search('term1', 'term2', filter_key='filter_value')
+```
+Works just like project_search.
+
+###Get Work in Progress
+```python
+wip = behance.get_wip(wip_id)
+```
+Returns WIP object. This object has attributes named identically to attributes
+as returned by Behance API. 
+
+###Get Revision
+```python
+rev = wip.get_revision(revision_id)
+```
+Works in progress store multiple revisions. Fetch individidual revisions with
+a revision ID. Method of the WIP object. 
+
+###Get Comments
+```python
+comments = wip.get_revision_comments(revision_id, filter_key='filter_value')
+```
+Comments are stored associated with a revision. Method of the WIP object. Can optionally
+include any filters supported by Behance API.
+
 
 #Exceptions
 Unfortunately, they happen. If an exception happens in the calling of the API
-(e.g. a timeout), the library will raise the exception from the underlying Requests
-library. If the response from the Behance API is anything other than status code
-200, it will raise a BehanceException exception with the number of the status
-code. Eventually, will move to separate exception types for each error code.
+but before a response is returned (e.g. a timeout), the library will raise 
+the exception from the underlying Requests library. If the response from the 
+Behance API is anything other than status code 200, it will raise a 
+BehanceException exception with the number of the status code. Eventually, will 
+move to separate exception types for each error code.

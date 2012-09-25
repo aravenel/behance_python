@@ -1,7 +1,8 @@
 ENDPOINTS = {
         'api': 'http://www.behance.net/v2',
         'project': '/projects',
-        'user': '/users'
+        'user': '/users',
+        'wip': '/wips',
         }
 
 def url_join(*args):

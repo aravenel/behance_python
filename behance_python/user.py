@@ -43,7 +43,7 @@ class User:
 
         #Call the API
         #_results = requests.get(_url)
-        _results = self._get_api_data(_url)
+        _results = self._get_api_data(_url)['user']
 
         for k, v in _results.items():
             self._add_property(k, v)

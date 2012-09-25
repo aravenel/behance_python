@@ -3,6 +3,7 @@ import requests
 from behance_python import ENDPOINTS, url_join
 from project import Project
 from user import User
+from wip import WIP
 from exceptions import BehanceException
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
@@ -82,3 +83,27 @@ class API:
 
     def get_user(self, user_id):
         return User(user_id, self.auth_key)
+
+    def wip_search(self, *args, **kwargs):
+        try:
+            if len(args) == 0:
+                raise BehanceException(000)
+            else:
+                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['wip'])
+                _terms = "+".join(urllib.quote(arg) for arg in args)
+                _filters = urllib.urlencode(kwargs)
+                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+
+                #Get results from API
+                _results = requests.get(_url)
+
+                #Parse results
+                if _results.status_code == 200:
+                    return _results.json['wips']
+                else:
+                    raise BehanceException(_results.status_code)
+        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
+            raise e
+
+    def get_wip(self, wip_id):
+        return WIP(wip_id, self.auth_key)
