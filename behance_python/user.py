@@ -1,40 +1,17 @@
 import urllib
-import requests
+from behance import Behance
 from behance_python import ENDPOINTS, url_join
-from exceptions import BehanceException
-from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
-#   TODO: Very similar to Project class. Refactor and inherit common class.
 #   TODO: Should get_projects return project objects? How to do this with min overhead?
 
-class User:
+class User(Behance):
 
     def __init__(self, user_id, auth_key):
+        Behance.__init__(self, auth_key)
         self.user_id = user_id
-        self.auth_key = auth_key
         self.base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
 
         self._get_user_details()
-
-    def _add_property(self, name, value):
-        """Helper function to dynamically add all the JSON data from API response
-        to the Project object."""
-        setattr(self.__class__, name, value)
-
-    def _get_api_data(self, url):
-        """Internal helper to call API and handle exceptions"""
-        try:
-            _results = requests.get(url)
-
-            #Parse the data
-            if _results.status_code == 200:
-                return _results.json
-            else:
-                #If error from API, raise exception
-                raise BehanceException(_results.status_code)
-        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
-            #If requests raises and exception
-            raise e
 
     def _get_user_details(self):
         #Build the URL
