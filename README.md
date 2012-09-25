@@ -12,6 +12,6 @@ All wrapper functionality flows from the main API object which must be
 instantiated using your Behance-provided API Key.
 
 ##API Object Usage
-`from behance_python import API
-
-behance = API('your_api_key_here')`
+    from behance_python import API
+    
+    behance = API('your_api_key_here')`
