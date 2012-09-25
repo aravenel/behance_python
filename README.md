@@ -18,26 +18,26 @@ instantiated using your Behance-provided API Key.
 
 ##Project functionality
 ###Search for projects
-    ```python
-    projects = behance.project_search('term1', 'term2', filter_key='filter_value')
-    ```
+```python
+projects = behance.project_search('term1', 'term2', filter_key='filter_value')
+```
 
 Supports all filters and modifiers as supported by Behance:
-*sort
-*time
-*field
-*country
-*state
-*page
-*tags
+-sort
+-time
+-field
+-country
+-state
+-page
+-tags
 
 Data will be returned as list of dictionaries with same keys and data formats
 as Behance API.
 
 ###Get Single Project Details
-    ```python
-    proj = behance.get_project(project_id)
-    ```
+```python
+proj = behance.get_project(project_id)
+```
 
 Returns an instance of the Project object. This object has attributes named
 identically to attributes as returned by Behance API. As with the API, 
@@ -46,8 +46,8 @@ of dictionaries, each dictionary representing one module and its corresponding
 metadata.
 
 ###Get Project Comments
-    ```python
-    proj.get_comments()
-    ```
+```python
+proj.get_comments()
+```
 Method of the Project object. Returns list of dictionaries, each dictionary
 representing a single comment and its metadata.
