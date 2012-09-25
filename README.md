@@ -167,5 +167,6 @@ BehanceException, and they are:
 - TooManyRequests (423 error)
 - InternalServerError (500 error)
 - ServiceUnavailable (503 error)
+
 If any other error code is received, will throw a generic BehanceException with
 the actual error code stored in attribute self.error_code.
