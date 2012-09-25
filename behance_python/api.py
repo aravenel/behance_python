@@ -36,9 +36,9 @@ class API:
 
             #Build the URL
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
-            terms = "+".join(arg for arg in args)
-            filters = "&".join("%s=%s" % (k, v) for k, v in kwargs.items())
-            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, terms, filters)
+            _terms = "+".join(arg for arg in args)
+            _filters = "&".join("%s=%s" % (k, v) for k, v in kwargs.items())
+            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
             _results = requests.get(_url)
