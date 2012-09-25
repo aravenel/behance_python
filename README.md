@@ -23,13 +23,13 @@ projects = behance.project_search('term1', 'term2', filter_key='filter_value')
 ```
 
 Supports all filters and modifiers as supported by Behance:
--sort
--time
--field
--country
--state
--page
--tags
+- sort
+- time
+- field
+- country
+- state
+- page
+- tags
 
 Data will be returned as list of dictionaries with same keys and data formats
 as Behance API.
