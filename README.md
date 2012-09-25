@@ -6,6 +6,8 @@ A Python wrapper for the Behance API
 
 ####Warning! This wrapper is very much still in development and could change substantially!
 
+Please see [Behance API documentation](http://www.behance.net/dev) to get an API key and more information.
+
 #Installation
 TBD. Need to do packaging.
 
@@ -53,3 +55,9 @@ proj.get_comments()
 ```
 Method of the Project object. Returns list of dictionaries, each dictionary
 representing a single comment and its metadata.
+
+##User functionality
+TBD.
+
+#Work in Progress Functionality
+TBD.
