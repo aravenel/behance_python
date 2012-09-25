@@ -62,7 +62,7 @@ representing a single comment and its metadata.
 ##User functionality
 ###Search for Users
 ```python
-users = behance.get_users('term1', 'term2', filter_key='filter_value')
+users = behance.user_search('term1', 'term2', filter_key='filter_value')
 ```
 Works just like project_search.
 
@@ -73,23 +73,27 @@ user = behance.get_user(user_id_or_username)
 
 ###Get User Projects
 ```python
-user_projects = user.get_projects()
+user_projects = user.get_projects(filter_key='filter_value')
 ```
+Can optionally include any filters supported by Behance API.
 
 ###Get User Works in Progress
 ```python
-user_wips = user.get_wips()
+user_wips = user.get_wips(filter_key='filter_value')
 ```
+Can optionally include any filters supported by Behance API.
 
 ###Get User Appreciations
 ```python
-user_appreciations = user.get_appreciations()
+user_appreciations = user.get_appreciations(filter_key='filter_value')
 ```
+Can optionally include any filters supported by Behance API.
 
 ###Get User Collections
 ```python
-user_collections = user.get_collections()
+user_collections = user.get_collections(filter_key='filter_value')
 ```
+Can optionally include any filters supported by Behance API.
 
 ##Work in Progress Functionality
 TBD.
