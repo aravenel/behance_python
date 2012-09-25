@@ -4,6 +4,7 @@ from behance_python import ENDPOINTS, url_join
 from project import Project
 from user import User
 from wip import WIP
+from collection import Collection
 from exceptions import BehanceException
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
@@ -17,6 +18,20 @@ class API:
 
     def __init__(self, auth_key):
         self.auth_key = auth_key
+
+    def _do_api_search(self, url):
+        try:
+            #Get results from API
+            _results = requests.get(url)
+
+            #Parse results
+            if _results.status_code == 200:
+                return _results.json
+            else:
+                raise BehanceException(_results.status_code)
+        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
+            raise e
+
 
     def get_project(self, project_id):
         """Query behance API and return Project instance"""
@@ -35,75 +50,63 @@ class API:
             page: [page number of results, 1-indexed]
             tags: [single tag name or pipe separated list of tags]
         """
-        try:
-            if len(args) == 0:
-                #Make sure user provides search terms...
-                raise BehanceException(000)
-            else:
-                #Build the URL
-                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
-                _terms = "+".join(urllib.quote(arg) for arg in args)
-                _filters = urllib.urlencode(kwargs)
-                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+        if len(args) == 0:
+            #Make sure user provides search terms...
+            raise BehanceException(000)
+        else:
+            #Build the URL
+            _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
+            _terms = "+".join(urllib.quote(arg) for arg in args)
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
-                #Get results from API
-                _results = requests.get(_url)
-
-                #Parse results
-                if _results.status_code == 200:
-                    return _results.json['projects']
-                else:
-                    raise BehanceException(_results.status_code)
-        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
-            raise e
+            #Get results from API
+            return self._do_api_search(_url)['projects']
 
     def user_search(self, *args, **kwargs):
         """Search for users on Behance.
         Takes any number of text search terms, as well as key/value filters
         as supported by Behance API."""
-        try:
-            if len(args) == 0:
-                raise BehanceException(000)
-            else:
-                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
-                _terms = "+".join(urllib.quote(arg) for arg in args)
-                _filters = urllib.urlencode(kwargs)
-                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+        if len(args) == 0:
+            raise BehanceException(000)
+        else:
+            _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
+            _terms = "+".join(urllib.quote(arg) for arg in args)
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
-                #Get results from API
-                _results = requests.get(_url)
-
-                #Parse results
-                if _results.status_code == 200:
-                    return _results.json['users']
-                else:
-                    raise BehanceException(_results.status_code)
-        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
-            raise e
+            #Get results from API
+            return self._do_api_search(_url)['users']
 
     def get_user(self, user_id):
         return User(user_id, self.auth_key)
 
     def wip_search(self, *args, **kwargs):
-        try:
-            if len(args) == 0:
-                raise BehanceException(000)
-            else:
-                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['wip'])
-                _terms = "+".join(urllib.quote(arg) for arg in args)
-                _filters = urllib.urlencode(kwargs)
-                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+        if len(args) == 0:
+            raise BehanceException(000)
+        else:
+            _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['wip'])
+            _terms = "+".join(urllib.quote(arg) for arg in args)
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
-                #Get results from API
-                _results = requests.get(_url)
-
-                #Parse results
-                if _results.status_code == 200:
-                    return _results.json['wips']
-                else:
-                    raise BehanceException(_results.status_code)
-        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
-            raise e
+            #Get results from API
+            return self._do_api_search(_url)['wips']
 
     def get_wip(self, wip_id):
         return WIP(wip_id, self.auth_key)
+
+    def collection_search(self, *args, **kwargs):
+        if len(args) == 0:
+            raise BehanceException(000)
+        else:
+            _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['collection'])
+            _terms = "+".join(urllib.quote(arg) for arg in args)
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+
+            #Get results from API
+            return self._do_api_search(_url)['collections']
+
+    def get_collection(self, collection_id):
+        return Collection(collection_id, self.auth_key)

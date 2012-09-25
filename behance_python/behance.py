@@ -1,5 +1,4 @@
 import requests
-from behance_python import ENDPOINTS, url_join
 from exceptions import BehanceException
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 

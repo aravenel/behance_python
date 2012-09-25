@@ -8,6 +8,10 @@ A Python wrapper for the Behance API
 
 Please see [Behance API documentation](http://www.behance.net/dev) to get an API key and more information.
 
+**Note**: Many Behance API endpoints provide data in pages of 12 items. You will
+need to page through results until you receive a 500 error (in the form of
+a BehanceException) which will indicate that there are no more pages.
+
 #Installation
 TBD. Need to do packaging.
 Depends on the excellent Requests library.
@@ -102,7 +106,7 @@ Method of the User object. Can optionally include any filters supported by Behan
 ##Work in Progress Functionality
 ###Search for Works in Progress
 ```python
-wips = behance.wips_search('term1', 'term2', filter_key='filter_value')
+wips = behance.wip_search('term1', 'term2', filter_key='filter_value')
 ```
 Works just like project_search.
 
@@ -126,6 +130,29 @@ comments = wip.get_revision_comments(revision_id, filter_key='filter_value')
 ```
 Comments are stored associated with a revision. Method of the WIP object. Can optionally
 include any filters supported by Behance API.
+
+##Collection Functionality
+###Search for Collections
+```python
+collections = behance.collection_search('term1', 'term2', filter_key='filter_value')
+```
+Works just like project_search.
+
+###Get Collection
+```python
+collection = behance.get_collection(collection_id)
+```
+Returns Collection object. This object has attributes named identically to attributes
+as returned by Behance API.
+
+###Get Collection Projects
+```python
+projects = collection.get_projects(filter_key='filter_value')
+```
+Returns projects that are members of a collection. Note that these are not actual
+Project instances to save on API calls--to get artwork for these, you would need to
+call API.get_project(project_id). Can optionally include any filters supported by 
+Behance API.
 
 
 #Exceptions

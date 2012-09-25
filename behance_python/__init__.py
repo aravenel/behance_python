@@ -3,6 +3,7 @@ ENDPOINTS = {
         'project': '/projects',
         'user': '/users',
         'wip': '/wips',
+        'collection': '/collections',
         }
 
 def url_join(*args):
