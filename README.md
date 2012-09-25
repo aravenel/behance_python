@@ -10,6 +10,7 @@ Please see [Behance API documentation](http://www.behance.net/dev) to get an API
 
 #Installation
 TBD. Need to do packaging.
+Depends on the excellent Requests library.
 
 #Usage
 All wrapper functionality flows from the main API object which must be
