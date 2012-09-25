@@ -54,13 +54,49 @@ metadata.
 
 ###Get Project Comments
 ```python
-proj.get_comments()
+comments = proj.get_comments()
 ```
 Method of the Project object. Returns list of dictionaries, each dictionary
 representing a single comment and its metadata.
 
 ##User functionality
-TBD.
+###Search for Users
+```python
+users = behance.get_users('term1', 'term2', filter_key='filter_value')
+```
+Works just like project_search.
+
+###Get Single User Details
+```python
+user = behance.get_user(user_id_or_username)
+```
+
+###Get User Projects
+```python
+user_projects = user.get_projects()
+```
+
+###Get User Works in Progress
+```python
+user_wips = user.get_wips()
+```
+
+###Get User Appreciations
+```python
+user_appreciations = user.get_appreciations()
+```
+
+###Get User Collections
+```python
+user_collections = user.get_collections()
+```
 
 ##Work in Progress Functionality
 TBD.
+
+#Exceptions
+Unfortunately, they happen. If an exception happens in the calling of the API
+(e.g. a timeout), the library will raise the exception from the underlying Requests
+library. If the response from the Behance API is anything other than status code
+200, it will raise a BehanceException exception with the number of the status
+code. Eventually, will move to separate exception types for each error code.

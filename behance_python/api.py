@@ -1,8 +1,13 @@
+import urllib
 import requests
 from behance_python import ENDPOINTS, url_join
 from project import Project
+from user import User
 from exceptions import BehanceException
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
+
+#   TODO: Searches not DRY. Refactor.
+#   TODO: Use property decorator on objects to avoid mixing methods and attributes
 
 class API:
     """Base wrapper for the Behance api.
@@ -18,7 +23,7 @@ class API:
 
     def project_search(self, *args, **kwargs):
         """Search for projects on Behance. 
-        Takes list of plain text search terms, as well as key/value filters.
+        Takes any number of text search terms, as well as key/value filters.
 
         Valid filters: [valid values]
             sort: [featured_date, appreciations, views, comments, published_date]
@@ -33,20 +38,47 @@ class API:
             if len(args) == 0:
                 #Make sure user provides search terms...
                 raise BehanceException(000)
-
-            #Build the URL
-            _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
-            _terms = "+".join(arg for arg in args)
-            _filters = "&".join("%s=%s" % (k, v) for k, v in kwargs.items())
-            _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
-
-            #Get results from API
-            _results = requests.get(_url)
-
-            #Parse results
-            if _results.status_code == 200:
-                return _results.json['projects']
             else:
-                raise BehanceException(_results.status_code)
+                #Build the URL
+                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
+                _terms = "+".join(urllib.quote(arg) for arg in args)
+                _filters = urllib.urlencode(kwargs)
+                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+
+                #Get results from API
+                _results = requests.get(_url)
+
+                #Parse results
+                if _results.status_code == 200:
+                    return _results.json['projects']
+                else:
+                    raise BehanceException(_results.status_code)
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             raise e
+
+    def user_search(self, *args, **kwargs):
+        """Search for users on Behance.
+        Takes any number of text search terms, as well as key/value filters
+        as supported by Behance API."""
+        try:
+            if len(args) == 0:
+                raise BehanceException(000)
+            else:
+                _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
+                _terms = "+".join(urllib.quote(arg) for arg in args)
+                _filters = urllib.urlencode(kwargs)
+                _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
+
+                #Get results from API
+                _results = requests.get(_url)
+
+                #Parse results
+                if _results.status_code == 200:
+                    return _results.json['users']
+                else:
+                    raise BehanceException(_results.status_code)
+        except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
+            raise e
+
+    def get_user(self, user_id):
+        return User(user_id, self.auth_key)
