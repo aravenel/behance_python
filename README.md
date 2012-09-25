@@ -59,5 +59,5 @@ representing a single comment and its metadata.
 ##User functionality
 TBD.
 
-#Work in Progress Functionality
+##Work in Progress Functionality
 TBD.
