@@ -4,6 +4,8 @@ behance_python
 A Python wrapper for the Behance API
 ------------------------------------
 
+####Warning! This wrapper is very much still in development and could change substantially!
+
 #Installation
 TBD. Need to do packaging.
 
