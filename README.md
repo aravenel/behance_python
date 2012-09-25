@@ -55,7 +55,7 @@ metadata.
 ```python
 comments = proj.get_comments()
 ```
-Method of the Project object. Returns list of dictionaries, each dictionary
+Method of the Project object. Returns list of dictionaries, each dictionary 
 representing a single comment and its metadata.
 
 ##User functionality

@@ -3,7 +3,7 @@ from exceptions import BehanceException
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
 class Behance:
-    """Base object to be inherited by other Behance objects (project, user, WIP,
+    """Base class to be inherited by other Behance classes (project, user, WIP,
     collection). Implements API calling and error handling."""
 
     def __init__(self, auth_key):

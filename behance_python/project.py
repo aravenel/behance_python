@@ -29,8 +29,8 @@ class Project(Behance):
             self._add_property(k, v)
 
     def get_comments(self):
-        """Gets the comments for the project. Returns list of dicts."""
+        """Returns comments for a project as an attribute. If called more than
+        once, will store the value to prevent repeatedly calling the API."""
         _url = url_join(self.base_url, str(self.project_id), 'comments')
         _url = "%s?api_key=%s" % (_url, self.auth_key)
-
         return self._get_api_data(_url)['comments']
