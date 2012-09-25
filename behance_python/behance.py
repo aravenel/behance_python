@@ -1,5 +1,5 @@
 import requests
-from exceptions import BehanceException
+import exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
 class Behance:
@@ -19,12 +19,17 @@ class Behance:
         try:
             _results = requests.get(url)
 
-            #Parse the data
             if _results.status_code == 200:
                 return _results.json
             else:
-                #If error from API, raise exception
-                raise BehanceException(_results.status_code)
+                #raise BehanceException(_results.status_code)
+                #Throw the error corresponding to the correct error code.
+                #If unknown error code, throw generic error.
+                n = _results.status_code
+                try:
+                    raise getattr(exceptions, exceptions.EXCEPTIONMAPPING[n])(n)
+                except AttributeError:
+                    raise exceptions.BehanceException(n)
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             #If requests raises and exception
             raise e

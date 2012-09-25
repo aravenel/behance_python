@@ -159,6 +159,13 @@ Behance API.
 Unfortunately, they happen. If an exception happens in the calling of the API
 but before a response is returned (e.g. a timeout), the library will raise 
 the exception from the underlying Requests library. If the response from the 
-Behance API is anything other than status code 200, it will raise a 
-BehanceException exception with the number of the status code. Eventually, will 
-move to separate exception types for each error code.
+Behance API is anything other than status code 200, it will raise an exception 
+corresponding to the error code. These exceptions are all subclasses of the 
+BehanceException, and they are:
+- Forbidden (403 error)
+- NotFound (404 error)
+- TooManyRequests (423 error)
+- InternalServerError (500 error)
+- ServiceUnavailable (503 error)
+If any other error code is received, will throw a generic BehanceException with
+the actual error code stored in attribute self.error_code.

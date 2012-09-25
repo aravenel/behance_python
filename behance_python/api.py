@@ -5,11 +5,8 @@ from project import Project
 from user import User
 from wip import WIP
 from collection import Collection
-from exceptions import BehanceException
+import exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
-
-#   TODO: Searches not DRY. Refactor.
-#   TODO: Use property decorator on objects to avoid mixing methods and attributes
 
 class API:
     """Base wrapper for the Behance api.
@@ -28,7 +25,11 @@ class API:
             if _results.status_code == 200:
                 return _results.json
             else:
-                raise BehanceException(_results.status_code)
+                n = _results.status_code
+                try:
+                    raise getattr(exceptions, exceptions.EXCEPTIONMAPPING[n])(n)
+                except AttributeError:
+                    raise exceptions.BehanceException(n)
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             raise e
 
@@ -52,7 +53,7 @@ class API:
         """
         if len(args) == 0:
             #Make sure user provides search terms...
-            raise BehanceException(000)
+            return None
         else:
             #Build the URL
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
@@ -68,7 +69,7 @@ class API:
         Takes any number of text search terms, as well as key/value filters
         as supported by Behance API."""
         if len(args) == 0:
-            raise BehanceException(000)
+            return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
             _terms = "+".join(urllib.quote(arg) for arg in args)
@@ -83,7 +84,7 @@ class API:
 
     def wip_search(self, *args, **kwargs):
         if len(args) == 0:
-            raise BehanceException(000)
+            return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['wip'])
             _terms = "+".join(urllib.quote(arg) for arg in args)
@@ -98,7 +99,7 @@ class API:
 
     def collection_search(self, *args, **kwargs):
         if len(args) == 0:
-            raise BehanceException(000)
+            return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['collection'])
             _terms = "+".join(urllib.quote(arg) for arg in args)
