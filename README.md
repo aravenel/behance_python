@@ -13,8 +13,11 @@ need to page through results until you receive a 500 error (in the form of
 a BehanceException) which will indicate that there are no more pages.
 
 #Installation
-TBD. Need to do packaging.
-Depends on the excellent Requests library.
+    pip install behance_python
+
+Or:
+
+    git clone git://github.com/aravenel/behance_python.git
 
 #Usage
 All wrapper functionality flows from the main API object which must be
