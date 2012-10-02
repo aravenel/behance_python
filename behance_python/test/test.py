@@ -4,11 +4,11 @@ from behance_python.api import API
 from behance_python.exceptions import *
 
 API_KEY = os.environ.get('BEHANCE_API_KEY')
-PROJECT_ID = '5287059'
+PROJECT_ID = 5287059
 USER_NAME = 'MatiasCorea'
-WIP_ID = '77'
-WIP_REVISION_ID = '177'
-COLLECTION_ID = '14373'
+WIP_ID = 77
+WIP_REVISION_ID = 177
+COLLECTION_ID = 14373
 
 #Attributes to check existence of in returned values
 #These keys should exist in both "stub" (from search functions) and "full"

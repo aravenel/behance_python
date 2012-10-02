@@ -63,8 +63,7 @@ class Behance(dict):
             for k, v in data.items():
                 new_k = self._convert_int(k)
                 new_v = self._parse_data(v)
-                #self._add_property(new_k, new_v)
-                self.__setattr__(new_k, new_v)
+                __setattr__(self, new_k, new_v)
         else:
             raise TypeError, 'Expected a dict'
 

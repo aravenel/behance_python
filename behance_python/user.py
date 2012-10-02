@@ -40,7 +40,7 @@ class User(Behance):
         else:
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
-        return self._get_api_data(_url)['wips']
+        return self._parse_data(self._get_api_data(_url)['wips'])
 
     def get_appreciations(self, **kwargs):
         _base_url = url_join(self.base_url, self.user_id, 'appreciations')
@@ -50,7 +50,7 @@ class User(Behance):
         else:
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
-        return self._get_api_data(_url)['appreciations']
+        return self._parse_data(self._get_api_data(_url)['appreciations'])
 
     def get_collections(self, **kwargs):
         _base_url = url_join(self.base_url, self.user_id, 'collections')
@@ -60,4 +60,4 @@ class User(Behance):
         else:
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
-        return self._get_api_data(_url)['collections']
+        return self._parse_data(self._get_api_data(_url)['collections'])

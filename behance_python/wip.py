@@ -16,14 +16,12 @@ class WIP(Behance):
         _url = url_join(self.base_url, self.wip_id)
         _url = '%s?api_key=%s' % (_url, self.auth_key)
         _results = self._get_api_data(_url)['wip']
-
-        for k, v in _results.items():
-            self._add_property(k, v)
+        self.set_data(_results)
 
     def get_revision(self, revision_id):
         _url = url_join(self.base_url, self.wip_id, str(revision_id))
         _url = '%s?api_key=%s' % (_url, self.auth_key)
-        return self._get_api_data(_url)['revision']
+        return self._parse_data(self._get_api_data(_url)['revision'])
 
     def get_revision_comments(self, revision_id, **kwargs):
         _base_url = url_join(self.base_url, self.wip_id, str(revision_id), '/comments')
@@ -33,4 +31,4 @@ class WIP(Behance):
         else:
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
-        return self._get_api_data(_url)['comments']
+        return self._parse_data(self._get_api_data(_url)['comments'])

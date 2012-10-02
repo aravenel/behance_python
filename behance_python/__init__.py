@@ -7,7 +7,7 @@ ENDPOINTS = {
         }
 
 def url_join(*args):
-    return "/".join(s.strip('/') for s in args)
+    return "/".join(str(s).strip('/') for s in args)
 
 from api import *
 from project import *
