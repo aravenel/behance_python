@@ -19,11 +19,8 @@ class User(Behance):
         _url = "%s?api_key=%s" % (_url, self.auth_key)
 
         #Call the API
-        #_results = requests.get(_url)
         _results = self._get_api_data(_url)['user']
-
-        for k, v in _results.items():
-            self._add_property(k, v)
+        self.set_data(_results)
 
     def get_projects(self, **kwargs):
         _base_url = url_join(self.base_url, self.user_id, 'projects')
@@ -33,7 +30,7 @@ class User(Behance):
         else:
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
-        return self._get_api_data(_url)['projects']
+        return self._parse_data(self._get_api_data(_url)['projects'])
 
     def get_wips(self, **kwargs):
         _base_url = url_join(self.base_url, self.user_id, 'wips')
