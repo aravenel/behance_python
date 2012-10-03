@@ -29,10 +29,7 @@ class Behance(dict):
         if isinstance(data, dict):
             new_data = Behance(data=data)
         elif isinstance(data, list):
-            new_data = []
-            for item in data:
-                new_item = self._parse_data(item)
-                new_data.append(new_item)
+            new_data = [self._parse_data(item) for item in data]
         else:
             new_data = data
 
