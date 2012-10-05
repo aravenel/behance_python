@@ -7,5 +7,5 @@ setup(
         license='MIT',
         author='Alex Ravenel',
         author_email='ravenel@gmail.com',
-        version='0.1.0',
+        version='0.2.0',
         )
