@@ -65,7 +65,8 @@ metadata.
 ###Get Project Comments
 ```python
 comments = proj.get_comments()
-comment[0].user
+comment[0].user.first_name
+>>> 'Matias'
 ```
 Method of the Project object. Returns list of objects, each object 
 representing a single comment and its metadata.
@@ -75,13 +76,15 @@ representing a single comment and its metadata.
 ```python
 users = behance.user_search('term1', 'term2', filter_key='filter_value')
 users[0].first_name
->>> Matias
+>>> 'Matias'
 ```
 Works just like project_search.
 
 ###Get Single User Details
 ```python
 user = behance.get_user(user_id_or_username)
+user.first_name
+>>> 'Matias'
 ```
 Returns User object. This object has attributes named identically to attributes
 as returned by Behance API. 
@@ -90,43 +93,57 @@ as returned by Behance API.
 ###Get User Projects
 ```python
 user_projects = user.get_projects(filter_key='filter_value')
+user_projects[0].name 
+>>> 'The ALVA Award'
 ```
-Method of the User object. Can optionally include any filters supported by Behance API.
-So as not to chew up API calls, these are not actual Project objects. To get 
-artwork associated with these projects, you will need to call the API.get_project(project_id)
-method.
+Method of the User object. Returns list of objects. Can optionally include any 
+filters supported by Behance API. So as not to chew up API calls, these are not 
+actual Project objects. To get artwork associated with these projects, you will 
+need to call the API.get_project(project_id) method.
 
 ###Get User Works in Progress
 ```python
 user_wips = user.get_wips(filter_key='filter_value')
+wips[0].latest_rev_id
+>>> '173'
 ```
-Method of the User object. Can optionally include any filters supported by Behance API.
-So as not to chew up API calls, these are not actual WIP objects. To get 
-artwork associated with these projects, you will need to call the API.get_WIP(wip_id)
-method.
+Method of the User object. Returns list of objects. Can optionally include any 
+filters supported by Behance API. So as not to chew up API calls, these are not 
+actual WIP objects. To get artwork associated with these projects, you will 
+need to call the API.get_WIP(wip_id) method.
 
 ###Get User Appreciations
 ```python
 user_appreciations = user.get_appreciations(filter_key='filter_value')
+user_appreciations[0].project.id
+>>> 4979439
 ```
 Method of the User object. Can optionally include any filters supported by Behance API.
+Returns list of objects.
 
 ###Get User Collections
 ```python
 user_collections = user.get_collections(filter_key='filter_value')
+user_collections[0].title
+>>> '00 Curation'
 ```
 Method of the User object. Can optionally include any filters supported by Behance API.
+Returns list of objects.
 
 ##Work in Progress Functionality
 ###Search for Works in Progress
 ```python
 wips = behance.wip_search('term1', 'term2', filter_key='filter_value')
+wips[0].title
+>>> 'Restaurant Menu Cover'
 ```
 Works just like project_search.
 
 ###Get Work in Progress
 ```python
 wip = behance.get_wip(wip_id)
+wip.title
+>>> 'Portfolio Review Schedule Design'
 ```
 Returns WIP object. This object has attributes named identically to attributes
 as returned by Behance API. 
@@ -134,6 +151,8 @@ as returned by Behance API.
 ###Get Revision
 ```python
 rev = wip.get_revision(revision_id)
+rev.tags
+>>> ['behance', 'schedule', 'information']
 ```
 Works in progress store multiple revisions. Fetch individidual revisions with
 a revision ID. Method of the WIP object. 
@@ -141,20 +160,26 @@ a revision ID. Method of the WIP object.
 ###Get Comments
 ```python
 comments = wip.get_revision_comments(revision_id, filter_key='filter_value')
+comments[0].user.first_name
+>>> 'Matias'
 ```
 Comments are stored associated with a revision. Method of the WIP object. Can optionally
-include any filters supported by Behance API.
+include any filters supported by Behance API. Returns list of objects.
 
 ##Collection Functionality
 ###Search for Collections
 ```python
 collections = behance.collection_search('term1', 'term2', filter_key='filter_value')
+collections[0].title
+>>> "Candy Landia"
 ```
 Works just like project_search.
 
 ###Get Collection
 ```python
 collection = behance.get_collection(collection_id)
+collection.title
+>>> 'Cool Candy Related Projects.'
 ```
 Returns Collection object. This object has attributes named identically to attributes
 as returned by Behance API.
@@ -162,8 +187,10 @@ as returned by Behance API.
 ###Get Collection Projects
 ```python
 projects = collection.get_projects(filter_key='filter_value')
+projects[0].name
+>>> 'Sweets'
 ```
-Returns projects that are members of a collection. Note that these are not actual
+Returns list of projects that are members of a collection. Note that these are not actual
 Project instances to save on API calls--to get artwork for these, you would need to
 call API.get_project(project_id). Can optionally include any filters supported by 
 Behance API.
