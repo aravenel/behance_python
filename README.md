@@ -24,14 +24,14 @@ All wrapper functionality flows from the main API object which must be
 instantiated using your Behance-provided API Key.
 
 All attributes can be accessed using either objects (object.key) or dict 
-(object['key']) notation. *Beware!* Some of the JSON returned may have numerical
+(object['key']) notation. **Beware!** Some of the JSON returned may have numerical
 keys, which Python cannot use for object notation--you will need to access these 
 by their dict notation. Additionally, as JSON returns unicode, integer keys have
 been converted from unicode to ints to make life easier.
 
 ##API Object Usage
 ```python
-from behance_python import API
+from behance_python.api import API
 
 behance = API('your_api_key_here')
 ```
@@ -40,37 +40,42 @@ behance = API('your_api_key_here')
 ###Search for projects
 ```python
 projects = behance.project_search('term1', 'term2', filter_key='filter_value')
+project_owner_name = projects[0].owners[129052].first_name
 ```
 
 Supports all filters and modifiers as supported by Behance.
 
-Data will be returned as list of dictionaries with same keys and data formats
-as Behance API. To save on API calls, these are not actual Project objects--you
-must call the API.get_project(project_id) method to get project details including
-images.
+Data will be returned as list of objects with same keys as Behance API. To save 
+on API calls, these are not full Project objects (i.e. they do not have all of 
+the attributes you would get from get_project())--you must call the 
+API.get_project(project_id) method to get project details including images.
 
 ###Get Single Project Details
 ```python
 proj = behance.get_project(project_id)
+project_images = [module.src for module in proj.modules if module.type=='image']
 ```
 
 Returns an instance of the Project object. This object has attributes named
 identically to attributes as returned by Behance API. As with the API, 
 artwork associated with a project are stored in Project.modules, which is a list
-of dictionaries, each dictionary representing one module and its corresponding
+of objects, each object representing one module and its corresponding
 metadata.
 
 ###Get Project Comments
 ```python
 comments = proj.get_comments()
+comment[0].user
 ```
-Method of the Project object. Returns list of dictionaries, each dictionary 
+Method of the Project object. Returns list of objects, each object 
 representing a single comment and its metadata.
 
 ##User functionality
 ###Search for Users
 ```python
 users = behance.user_search('term1', 'term2', filter_key='filter_value')
+users[0].first_name
+>>> Matias
 ```
 Works just like project_search.
 
