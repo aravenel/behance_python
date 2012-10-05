@@ -6,7 +6,8 @@ A Python wrapper for the Behance API
 
 ####Warning! This wrapper is very much still in development and could change substantially!
 
-Please see [Behance API documentation](http://www.behance.net/dev) to get an API key and more information.
+Please see [Behance API documentation](http://www.behance.net/dev) to get an 
+API key and more information, including field names and example content.
 
 **Note**: Many Behance API endpoints provide data in pages of 12 items. You will
 need to page through results until you receive a 500 error (in the form of
