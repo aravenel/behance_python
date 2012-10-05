@@ -40,7 +40,8 @@ behance = API('your_api_key_here')
 ###Search for projects
 ```python
 projects = behance.project_search('term1', 'term2', filter_key='filter_value')
-project_owner_name = projects[0].owners[129052].first_name
+projects[0].owners[129052].first_name
+>>> 'Matias'
 ```
 
 Supports all filters and modifiers as supported by Behance.
@@ -54,6 +55,8 @@ API.get_project(project_id) method to get project details including images.
 ```python
 proj = behance.get_project(project_id)
 project_images = [module.src for module in proj.modules if module.type=='image']
+len(project_images)
+>>> 3
 ```
 
 Returns an instance of the Project object. This object has attributes named
