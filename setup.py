@@ -4,6 +4,7 @@ setup(
         name='behance_python',
         packages=['behance_python',],
         install_requires=['requests'],
+        url='https://github.com/aravenel/behance_python',
         license='MIT',
         author='Alex Ravenel',
         author_email='ravenel@gmail.com',
