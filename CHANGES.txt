@@ -1,1 +1,2 @@
 v0.1.0, Sept 25 2012 -- Initial release
+v0.2.0, Oct 5 2012 -- Updated to allow use of object or dict notation when accessing attributes
