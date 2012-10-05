@@ -5,6 +5,7 @@ from project import Project
 from user import User
 from wip import WIP
 from collection import Collection
+from behance import Behance
 import exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
@@ -62,7 +63,7 @@ class API:
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
-            return self._do_api_search(_url)['projects']
+            return [Behance(data=proj) for proj in self._do_api_search(_url)['projects']]
 
     def user_search(self, *args, **kwargs):
         """Search for users on Behance.
@@ -77,7 +78,7 @@ class API:
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
-            return self._do_api_search(_url)['users']
+            return [Behance(data=user) for user  in self._do_api_search(_url)['users']]
 
     def get_user(self, user_id):
         return User(user_id, self.auth_key)
@@ -92,7 +93,7 @@ class API:
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
-            return self._do_api_search(_url)['wips']
+            return [Behance(data=wip) for wip in self._do_api_search(_url)['wips']]
 
     def get_wip(self, wip_id):
         return WIP(wip_id, self.auth_key)
@@ -107,7 +108,7 @@ class API:
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
-            return self._do_api_search(_url)['collections']
+            return [Behance(data=collection) for collection in self._do_api_search(_url)['collections']]
 
     def get_collection(self, collection_id):
         return Collection(collection_id, self.auth_key)

@@ -30,12 +30,14 @@ class TestProject(BehanceTestCase):
         for project in projects:
             for key in PROJECT_KEYS:
                 self.assertTrue(project.has_key(key))
+                self.assertTrue(hasattr(project, key))
 
     def test_project(self):
         project = self.api.get_project(PROJECT_ID)
         self.assertIsNotNone(project)
         for key in PROJECT_KEYS:
             self.assertTrue(hasattr(project, key))
+            self.assertTrue(project.has_key(key))
 
     def test_comments(self):
         project = self.api.get_project(PROJECT_ID)
@@ -44,6 +46,7 @@ class TestProject(BehanceTestCase):
         for comment in comments:
             for key in ['user', 'comment']:
                 self.assertTrue(comment.has_key(key))
+                self.assertTrue(hasattr(comment, key))
 
     def test_exception(self):
         with self.assertRaises(NotFound):
@@ -60,12 +63,14 @@ class TestUser(BehanceTestCase):
         for user in users:
             for key in USER_KEYS:
                 self.assertTrue(user.has_key(key))
+                self.assertTrue(hasattr(user, key))
 
     def test_user(self):
         user = self.api.get_user(USER_NAME)
         self.assertIsNotNone(user)
         for key in USER_KEYS:
             self.assertTrue(hasattr(user, key))
+            self.assertTrue(user.has_key(key))
     
     def test_user_projects(self):
         user = self.api.get_user(USER_NAME)
@@ -74,6 +79,7 @@ class TestUser(BehanceTestCase):
         for project in projects:
             for key in PROJECT_KEYS:
                 self.assertTrue(project.has_key(key))
+                self.assertTrue(hasattr(project, key))
 
     def test_user_wips(self):
         user = self.api.get_user(USER_NAME)
@@ -82,6 +88,7 @@ class TestUser(BehanceTestCase):
         for wip in wips:
             for key in WIP_KEYS:
                 self.assertTrue(wip.has_key(key))
+                self.assertTrue(hasattr(wip, key))
 
     def test_user_appreciations(self):
         user = self.api.get_user(USER_NAME)
@@ -90,6 +97,7 @@ class TestUser(BehanceTestCase):
         for appreciation in appreciations:
             for key in ['project', 'timestamp']:
                 self.assertTrue(appreciation.has_key(key))
+                self.assertTrue(hasattr(appreciation, key))
 
     def test_user_collections(self):
         user = self.api.get_user(USER_NAME)
@@ -98,6 +106,7 @@ class TestUser(BehanceTestCase):
         for collection in collections:
             for key in COLLECTION_KEYS:
                 self.assertTrue(collection.has_key(key))
+                self.assertTrue(hasattr(collection, key))
 
     def test_exception(self):
         with self.assertRaises(NotFound):
@@ -114,18 +123,21 @@ class TestWIP(BehanceTestCase):
         for wip in wips:
             for key in WIP_KEYS:
                 self.assertTrue(wip.has_key(key))
+                self.assertTrue(hasattr(wip, key))
 
     def test_wip(self):
         wip = self.api.get_wip(WIP_ID)
         self.assertIsNotNone(wip)
         for key in WIP_KEYS:
             self.assertTrue(hasattr(wip, key))
+            self.assertTrue(wip.has_key(key))
 
     def test_revision(self):
         wip = self.api.get_wip(WIP_ID)
         revision = wip.get_revision(WIP_REVISION_ID)
         for key in ['id', 'description', 'image']:
             self.assertTrue(revision.has_key(key))
+            self.assertTrue(hasattr(revision, key))
 
     def test_comments(self):
         wip = self.api.get_wip(WIP_ID)
@@ -133,6 +145,7 @@ class TestWIP(BehanceTestCase):
         for comment in comments:
             for key in ['user', 'comment', 'created_on']:
                 self.assertTrue(comment.has_key(key))
+                self.assertTrue(hasattr(comment, key))
 
     def test_exception(self):
         with self.assertRaises(NotFound):
@@ -149,12 +162,14 @@ class TestCollection(BehanceTestCase):
         for collection in collections:
             for key in COLLECTION_KEYS:
                 self.assertTrue(collection.has_key(key))
+                self.assertTrue(hasattr(collection, key))
 
     def test_collection(self):
         collection = self.api.get_collection(COLLECTION_ID)
         self.assertIsNotNone(collection)
         for key in COLLECTION_KEYS:
             self.assertTrue(hasattr(collection, key))
+            self.assertTrue(collection.has_key(key))
 
     def test_collection_projects(self):
         collection = self.api.get_collection(COLLECTION_ID)
@@ -162,6 +177,7 @@ class TestCollection(BehanceTestCase):
         for project in projects:
             for key in PROJECT_KEYS:
                 self.assertTrue(project.has_key(key))
+                self.assertTrue(hasattr(project, key))
 
     def test_exception(self):
         with self.assertRaises(NotFound):

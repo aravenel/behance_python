@@ -23,6 +23,12 @@ Or:
 All wrapper functionality flows from the main API object which must be
 instantiated using your Behance-provided API Key.
 
+All attributes can be accessed using either objects (object.key) or dict 
+(object['key']) notation. *Beware!* Some of the JSON returned may have numerical
+keys, which Python cannot use for object notation--you will need to access these 
+by their dict notation. Additionally, as JSON returns unicode, integer keys have
+been converted from unicode to ints to make life easier.
+
 ##API Object Usage
 ```python
 from behance_python import API
