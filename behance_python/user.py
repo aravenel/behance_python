@@ -61,3 +61,9 @@ class User(Behance):
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
         return self._parse_data(self._get_api_data(_url)['collections'])
+
+    def get_stats(self):
+        _base_url = url_join(self.base_url, self.user_id, 'stats')
+        _url = "%s?api_key=%s" % (_base_url, self.auth_key)
+        
+        return self._parse_data(self._get_api_data(_url)['stats'])
