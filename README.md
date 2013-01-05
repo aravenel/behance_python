@@ -6,8 +6,7 @@ A Python wrapper for the Behance API
 
 ####Warning! This wrapper is very much still in development and could change substantially!
 
-####Note that this library does not currently support any of the OAUTH based
-####POST functionality. This functionality will be added in future releases.
+####Note that this library does not currently support any of the OAUTH based POST functionality. This functionality will be added in future releases.
 
 Please see [Behance API documentation](http://www.behance.net/dev) to get an 
 API key and more information, including field names and example content.
@@ -143,6 +142,7 @@ user_stats = user.get_stats()
 user_stats.today.project_views
 >>> 220
 ```
+Method of the User object.
 
 ###Get User Followers
 ```python
@@ -150,12 +150,33 @@ followers = user.get_followers(filter_key='filter_value')
 followers[0].username
 >>> 'getflourish'
 ```
+Method of the User object. Can optionally include any filters supported by Behance API.
+Returns list of objects.
 
 ###Get Users Being Followed
 ```python
 following = user.get_following(filter_key='filter_value')
 following[0].username
 >>> 'getflourish'
+```
+Method of the User object. Can optionally include any filters supported by Behance API.
+Returns list of objects.
+
+###Get User Feedback Circle
+```python
+feedback_circle = user.get_feedback()
+feedback[0].username
+>>> 'getflourish'
+```
+Method of the User object. Returns list of objects.
+
+###Get Work Experience
+```python
+work_experience = user.get_work_experience()
+work_experience[0].position
+>>> 'Senior Designer'
+```
+Method of the User object. Returns list of objects.
 
 ##Work in Progress Functionality
 ###Search for Works in Progress

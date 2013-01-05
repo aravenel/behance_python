@@ -25,7 +25,7 @@ COLLECTION_ID = 14373
 #(from get_XXXX functions) values
 PROJECT_KEYS = ['id', 'name', 'published_on']
 USER_KEYS = ['id', 'username', 'created_on']
-WIP_KEYS = ['id', 'title', 'revision_count']
+WIP_KEYS = ['id', 'title', 'url']
 COLLECTION_KEYS = ['id', 'owners', 'stats']
 
 class BehanceTestCase(unittest.TestCase):
@@ -147,6 +147,24 @@ class TestUser(BehanceTestCase):
             self.assertTrue(hasattr(follow, 'id'))
             self.assertTrue(hasattr(follow, 'username'))
 
+    def test_user_feedback(self):
+        user = self.api.get_user(USER_NAME)
+        feedback = user.get_feedback()
+        KEYS = ['id', 'username', 'url']
+        for fb in feedback:
+            for key in KEYS:
+                self.assertTrue(fb.has_key(key))
+                self.assertTrue(hasattr(fb, key))
+
+    def test_user_work_experience(self):
+        user = self.api.get_user(USER_NAME)
+        work_experience = user.get_work_experience()
+        WE_KEYS = ['position', 'organization', 'location']
+        for we in work_experience:
+            for key in WE_KEYS:
+                self.assertTrue(we.has_key(key))
+                self.assertTrue(hasattr(we, key))
+
     def test_exception(self):
         with self.assertRaises(NotFound):
             user = self.api.get_user('asdf1234')
@@ -174,7 +192,7 @@ class TestWIP(BehanceTestCase):
     def test_revision(self):
         wip = self.api.get_wip(WIP_ID)
         revision = wip.get_revision(WIP_REVISION_ID)
-        for key in ['id', 'description', 'image']:
+        for key in ['id', 'description', 'url']:
             self.assertTrue(revision.has_key(key))
             self.assertTrue(hasattr(revision, key))
 

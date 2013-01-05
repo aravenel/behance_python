@@ -87,3 +87,15 @@ class User(Behance):
             _url = '%s?api_key=%s' % (_base_url, self.auth_key)
 
         return self._parse_data(self._get_api_data(_url)['following'])
+
+    def get_feedback(self):
+        _base_url = url_join(self.base_url, self.user_id, 'feedback')
+        _url = "%s?api_key=%s" % (_base_url, self.auth_key)
+        
+        return self._parse_data(self._get_api_data(_url)['feedback_circle'])
+
+    def get_work_experience(self):
+        _base_url = url_join(self.base_url, self.user_id, 'work_experience')
+        _url = "%s?api_key=%s" % (_base_url, self.auth_key)
+        
+        return self._parse_data(self._get_api_data(_url)['work_experience'])
