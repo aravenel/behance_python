@@ -2,3 +2,4 @@ v0.1.0, Sept 25 2012 -- Initial release
 v0.2.0, Oct 5 2012 -- Updated to allow use of object or dict notation when accessing attributes
 v0.2.1, Oct 5 2012 -- Tweaks to setup.py
 v0.2.2, Oct 5 2012 -- Added URL to setup.py
+v0.2.3, Jan 5 2012 -- Added user stats, follower, following, feedback, and work experience endpoints
