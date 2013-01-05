@@ -6,6 +6,9 @@ A Python wrapper for the Behance API
 
 ####Warning! This wrapper is very much still in development and could change substantially!
 
+####Note that this library does not currently support any of the OAUTH based
+####POST functionality. This functionality will be added in future releases.
+
 Please see [Behance API documentation](http://www.behance.net/dev) to get an 
 API key and more information, including field names and example content.
 
@@ -133,6 +136,26 @@ user_collections[0].title
 ```
 Method of the User object. Can optionally include any filters supported by Behance API.
 Returns list of objects.
+
+###Get User Stats
+```python
+user_stats = user.get_stats()
+user_stats.today.project_views
+>>> 220
+```
+
+###Get User Followers
+```python
+followers = user.get_followers(filter_key='filter_value')
+followers[0].username
+>>> 'getflourish'
+```
+
+###Get Users Being Followed
+```python
+following = user.get_following(filter_key='filter_value')
+following[0].username
+>>> 'getflourish'
 
 ##Work in Progress Functionality
 ###Search for Works in Progress

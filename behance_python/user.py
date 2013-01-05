@@ -67,3 +67,23 @@ class User(Behance):
         _url = "%s?api_key=%s" % (_base_url, self.auth_key)
         
         return self._parse_data(self._get_api_data(_url)['stats'])
+
+    def get_followers(self, **kwargs):
+        _base_url = url_join(self.base_url, self.user_id, 'followers')
+        if len(kwargs) > 0:
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&%s' % (_base_url, self.auth_key, _filters)
+        else:
+            _url = '%s?api_key=%s' % (_base_url, self.auth_key)
+
+        return self._parse_data(self._get_api_data(_url)['followers'])
+
+    def get_following(self, **kwargs):
+        _base_url = url_join(self.base_url, self.user_id, 'following')
+        if len(kwargs) > 0:
+            _filters = urllib.urlencode(kwargs)
+            _url = '%s?api_key=%s&%s' % (_base_url, self.auth_key, _filters)
+        else:
+            _url = '%s?api_key=%s' % (_base_url, self.auth_key)
+
+        return self._parse_data(self._get_api_data(_url)['following'])

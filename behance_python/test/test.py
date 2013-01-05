@@ -3,6 +3,16 @@ import os
 from behance_python.api import API
 from behance_python.exceptions import *
 
+"""
+TESTS
+
+To run tests:
+    1: Set environment variable with your API key:
+        export BEHANCE_API_KEY=your_api_key_here
+    2: Run test:
+        python -m behance_python.test.test
+"""
+
 API_KEY = os.environ.get('BEHANCE_API_KEY')
 PROJECT_ID = 5287059
 USER_NAME = 'MatiasCorea'
@@ -107,6 +117,35 @@ class TestUser(BehanceTestCase):
             for key in COLLECTION_KEYS:
                 self.assertTrue(collection.has_key(key))
                 self.assertTrue(hasattr(collection, key))
+
+    def test_user_stats(self):
+        user = self.api.get_user(USER_NAME)
+        stats = user.get_stats()
+        self.assertIsNotNone(stats)
+        self.assertTrue(stats.has_key('today'))
+        self.assertTrue(stats.has_key('all_time'))
+        self.assertTrue(hasattr(stats, 'today'))
+        self.assertTrue(hasattr(stats, 'all_time'))
+
+    def test_user_followers(self):
+        user = self.api.get_user(USER_NAME)
+        followers = user.get_followers()
+        self.assertIsNotNone(followers)
+        for follower in followers:
+            self.assertTrue(follower.has_key('id'))
+            self.assertTrue(follower.has_key('username'))
+            self.assertTrue(hasattr(follower, 'id'))
+            self.assertTrue(hasattr(follower, 'username'))
+
+    def test_user_following(self):
+        user = self.api.get_user(USER_NAME)
+        following = user.get_following()
+        self.assertIsNotNone(following)
+        for follow in following:
+            self.assertTrue(follow.has_key('id'))
+            self.assertTrue(follow.has_key('username'))
+            self.assertTrue(hasattr(follow, 'id'))
+            self.assertTrue(hasattr(follow, 'username'))
 
     def test_exception(self):
         with self.assertRaises(NotFound):
