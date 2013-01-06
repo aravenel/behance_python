@@ -14,21 +14,19 @@ class WIP(Behance):
 
     def _get_wip_details(self):
         _url = url_join(self.base_url, self.wip_id)
-        _url = '%s?api_key=%s' % (_url, self.auth_key)
-        _results = self._get_api_data(_url)['wip']
+        _params = self._build_params()
+
+        _results = self._get_api_data(_url, _params)['wip']
         self.set_data(_results)
 
     def get_revision(self, revision_id):
         _url = url_join(self.base_url, self.wip_id, str(revision_id))
-        _url = '%s?api_key=%s' % (_url, self.auth_key)
-        return self._parse_data(self._get_api_data(_url)['revision'])
+        _params = self._build_params()
+
+        return self._parse_data(self._get_api_data(_url, _params)['revision'])
 
     def get_revision_comments(self, revision_id, **kwargs):
-        _base_url = url_join(self.base_url, self.wip_id, str(revision_id), '/comments')
-        if len(kwargs) > 0:
-            _filters = urllib.urlencode(kwargs)
-            _url = '%s?api_key=%s&%s' % (_base_url, self.auth_key, _filters)
-        else:
-            _url = '%s?api_key=%s' % (_base_url, self.auth_key)
+        _url = url_join(self.base_url, self.wip_id, str(revision_id), '/comments')
+        _params = self._build_params(kwargs)
 
-        return self._parse_data(self._get_api_data(_url)['comments'])
+        return self._parse_data(self._get_api_data(_url, _params)['comments'])

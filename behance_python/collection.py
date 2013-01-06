@@ -13,17 +13,13 @@ class Collection(Behance):
 
     def _get_collection_details(self):
         _url = url_join(self.base_url, str(self.collection_id))
-        _url = "%s?api_key=%s" % (_url, self.auth_key)
+        _params = self._build_params()
 
-        _results = self._get_api_data(_url)['collection']
+        _results = self._get_api_data(_url, _params)['collection']
         self.set_data(_results)
 
     def get_projects(self, **kwargs):
-        _base_url = url_join(self.base_url, self.collection_id, 'projects')
-        if len(kwargs) > 0:
-            _filters = urllib.urlencode(kwargs)
-            _url = '%s?api_key=%s&%s' % (_base_url, self.auth_key, _filters)
-        else:
-            _url = '%s?api_key=%s' % (_base_url, self.auth_key)
+        _url = url_join(self.base_url, self.collection_id, 'projects')
+        _params = self._build_params(kwargs)
 
-        return self._parse_data(self._get_api_data(_url)['projects'])
+        return self._parse_data(self._get_api_data(_url, _params)['projects'])

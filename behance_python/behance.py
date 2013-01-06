@@ -60,7 +60,6 @@ class Behance(dict):
     def _build_params(self, params=None):
         """Build parameters dictionary for passing to Requests"""
         if params:
-            #all_params = dict(list(params.items()) + (('api_key', self.auth_key)))
             all_params = params
             all_params['api_key'] = self.auth_key
         else:

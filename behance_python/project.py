@@ -20,14 +20,16 @@ class Project(Behance):
         """Internal function to call Behance API and parse data."""
         #Build the URL
         _url = url_join(self.base_url, str(self.project_id))
-        _url = "%s?api_key=%s" % (_url, self.auth_key)
+        _params = self._build_params()
+
         #Call the API
-        _results = self._get_api_data(_url)['project']
+        _results = self._get_api_data(_url, _params)['project']
         self.set_data(_results)
 
     def get_comments(self):
         """Returns comments for a project as an attribute. If called more than
         once, will store the value to prevent repeatedly calling the API."""
         _url = url_join(self.base_url, str(self.project_id), 'comments')
-        _url = "%s?api_key=%s" % (_url, self.auth_key)
-        return self._parse_data(self._get_api_data(_url)['comments'])
+        _params = self._build_params()
+
+        return self._parse_data(self._get_api_data(_url, _params)['comments'])
