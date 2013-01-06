@@ -28,11 +28,12 @@ USER_KEYS = ['id', 'username', 'created_on']
 WIP_KEYS = ['id', 'title', 'url']
 COLLECTION_KEYS = ['id', 'owners', 'stats']
 
-class BehanceTestCase(unittest.TestCase):
-    def setUp(self):
-        self.api = API(API_KEY)
+class TestProject(unittest.TestCase):
 
-class TestProject(BehanceTestCase):
+    @classmethod
+    def setUpClass(self):
+        self.api = API(API_KEY)
+        self.project = self.api.get_project(PROJECT_ID)
 
     def test_search(self):
         projects = self.api.project_search('apple')
@@ -43,15 +44,13 @@ class TestProject(BehanceTestCase):
                 self.assertTrue(hasattr(project, key))
 
     def test_project(self):
-        project = self.api.get_project(PROJECT_ID)
-        self.assertIsNotNone(project)
+        self.assertIsNotNone(self.project)
         for key in PROJECT_KEYS:
-            self.assertTrue(hasattr(project, key))
-            self.assertTrue(project.has_key(key))
+            self.assertTrue(hasattr(self.project, key))
+            self.assertTrue(self.project.has_key(key))
 
     def test_comments(self):
-        project = self.api.get_project(PROJECT_ID)
-        comments = project.get_comments()
+        comments = self.project.get_comments()
         self.assertGreater(len(comments), 1)
         for comment in comments:
             for key in ['user', 'comment']:
@@ -65,7 +64,12 @@ class TestProject(BehanceTestCase):
             self.api = API('12345')
             projs = self.api.project_search('apple')
 
-class TestUser(BehanceTestCase):
+class TestUser(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        self.api = API(API_KEY)
+        self.user = self.api.get_user(USER_NAME)
 
     def test_search(self):
         users = self.api.user_search('alex')
@@ -76,15 +80,13 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(user, key))
 
     def test_user(self):
-        user = self.api.get_user(USER_NAME)
-        self.assertIsNotNone(user)
+        self.assertIsNotNone(self.user)
         for key in USER_KEYS:
-            self.assertTrue(hasattr(user, key))
-            self.assertTrue(user.has_key(key))
+            self.assertTrue(hasattr(self.user, key))
+            self.assertTrue(self.user.has_key(key))
     
     def test_user_projects(self):
-        user = self.api.get_user(USER_NAME)
-        projects = user.get_projects()
+        projects = self.user.get_projects()
         self.assertIsNotNone(projects)
         for project in projects:
             for key in PROJECT_KEYS:
@@ -92,8 +94,7 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(project, key))
 
     def test_user_wips(self):
-        user = self.api.get_user(USER_NAME)
-        wips = user.get_wips()
+        wips = self.user.get_wips()
         self.assertIsNotNone(wips)
         for wip in wips:
             for key in WIP_KEYS:
@@ -101,8 +102,7 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(wip, key))
 
     def test_user_appreciations(self):
-        user = self.api.get_user(USER_NAME)
-        appreciations = user.get_appreciations()
+        appreciations = self.user.get_appreciations()
         self.assertIsNotNone(appreciations)
         for appreciation in appreciations:
             for key in ['project', 'timestamp']:
@@ -110,8 +110,7 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(appreciation, key))
 
     def test_user_collections(self):
-        user = self.api.get_user(USER_NAME)
-        collections = user.get_collections()
+        collections = self.user.get_collections()
         self.assertIsNotNone(collections)
         for collection in collections:
             for key in COLLECTION_KEYS:
@@ -119,8 +118,7 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(collection, key))
 
     def test_user_stats(self):
-        user = self.api.get_user(USER_NAME)
-        stats = user.get_stats()
+        stats = self.user.get_stats()
         self.assertIsNotNone(stats)
         self.assertTrue(stats.has_key('today'))
         self.assertTrue(stats.has_key('all_time'))
@@ -128,8 +126,7 @@ class TestUser(BehanceTestCase):
         self.assertTrue(hasattr(stats, 'all_time'))
 
     def test_user_followers(self):
-        user = self.api.get_user(USER_NAME)
-        followers = user.get_followers()
+        followers = self.user.get_followers()
         self.assertIsNotNone(followers)
         for follower in followers:
             self.assertTrue(follower.has_key('id'))
@@ -138,8 +135,7 @@ class TestUser(BehanceTestCase):
             self.assertTrue(hasattr(follower, 'username'))
 
     def test_user_following(self):
-        user = self.api.get_user(USER_NAME)
-        following = user.get_following()
+        following = self.user.get_following()
         self.assertIsNotNone(following)
         for follow in following:
             self.assertTrue(follow.has_key('id'))
@@ -148,8 +144,7 @@ class TestUser(BehanceTestCase):
             self.assertTrue(hasattr(follow, 'username'))
 
     def test_user_feedback(self):
-        user = self.api.get_user(USER_NAME)
-        feedback = user.get_feedback()
+        feedback = self.user.get_feedback()
         KEYS = ['id', 'username', 'url']
         for fb in feedback:
             for key in KEYS:
@@ -157,8 +152,7 @@ class TestUser(BehanceTestCase):
                 self.assertTrue(hasattr(fb, key))
 
     def test_user_work_experience(self):
-        user = self.api.get_user(USER_NAME)
-        work_experience = user.get_work_experience()
+        work_experience = self.user.get_work_experience()
         WE_KEYS = ['position', 'organization', 'location']
         for we in work_experience:
             for key in WE_KEYS:
@@ -172,7 +166,12 @@ class TestUser(BehanceTestCase):
             self.api = API('12345')
             users = self.api.user_search('apple')
 
-class TestWIP(BehanceTestCase):
+class TestWIP(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(self):
+        self.api = API(API_KEY)
+        self.wip = self.api.get_wip(WIP_ID)
 
     def test_search(self):
         wips = self.api.wip_search('apple')
@@ -183,22 +182,19 @@ class TestWIP(BehanceTestCase):
                 self.assertTrue(hasattr(wip, key))
 
     def test_wip(self):
-        wip = self.api.get_wip(WIP_ID)
-        self.assertIsNotNone(wip)
+        self.assertIsNotNone(self.wip)
         for key in WIP_KEYS:
-            self.assertTrue(hasattr(wip, key))
-            self.assertTrue(wip.has_key(key))
+            self.assertTrue(hasattr(self.wip, key))
+            self.assertTrue(self.wip.has_key(key))
 
     def test_revision(self):
-        wip = self.api.get_wip(WIP_ID)
-        revision = wip.get_revision(WIP_REVISION_ID)
+        revision = self.wip.get_revision(WIP_REVISION_ID)
         for key in ['id', 'description', 'url']:
             self.assertTrue(revision.has_key(key))
             self.assertTrue(hasattr(revision, key))
 
     def test_comments(self):
-        wip = self.api.get_wip(WIP_ID)
-        comments = wip.get_revision_comments(WIP_REVISION_ID)
+        comments = self.wip.get_revision_comments(WIP_REVISION_ID)
         for comment in comments:
             for key in ['user', 'comment', 'created_on']:
                 self.assertTrue(comment.has_key(key))
@@ -211,8 +207,13 @@ class TestWIP(BehanceTestCase):
             self.api = API('12345')
             wips = self.api.wip_search('apple')
 
-class TestCollection(BehanceTestCase):
+class TestCollection(unittest.TestCase):
     
+    @classmethod
+    def setUpClass(self):
+        self.api = API(API_KEY)
+        self.collection = self.api.get_collection(COLLECTION_ID)
+
     def test_search(self):
         collections = self.api.collection_search('apple')
         self.assertGreaterEqual(len(collections), 1)
@@ -222,15 +223,13 @@ class TestCollection(BehanceTestCase):
                 self.assertTrue(hasattr(collection, key))
 
     def test_collection(self):
-        collection = self.api.get_collection(COLLECTION_ID)
-        self.assertIsNotNone(collection)
+        self.assertIsNotNone(self.collection)
         for key in COLLECTION_KEYS:
-            self.assertTrue(hasattr(collection, key))
-            self.assertTrue(collection.has_key(key))
+            self.assertTrue(hasattr(self.collection, key))
+            self.assertTrue(self.collection.has_key(key))
 
     def test_collection_projects(self):
-        collection = self.api.get_collection(COLLECTION_ID)
-        projects = collection.get_projects()
+        projects = self.collection.get_projects()
         for project in projects:
             for key in PROJECT_KEYS:
                 self.assertTrue(project.has_key(key))

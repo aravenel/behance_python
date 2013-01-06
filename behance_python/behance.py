@@ -35,10 +35,13 @@ class Behance(dict):
 
         return new_data
 
-    def _get_api_data(self, url):
+    def _get_api_data(self, url, params=None):
         """Internal helper to call API and handle exceptions"""
         try:
-            _results = requests.get(url)
+            if params:
+                _results = requests.get(url, params=params)
+            else:
+                _results = requests.get(url)
 
             if _results.status_code == 200:
                 return _results.json()
@@ -53,6 +56,17 @@ class Behance(dict):
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             #If requests raises an exception
             raise e
+
+    def _build_params(self, params=None):
+        """Build parameters dictionary for passing to Requests"""
+        if params:
+            #all_params = dict(list(params.items()) + (('api_key', self.auth_key)))
+            all_params = params
+            all_params['api_key'] = self.auth_key
+        else:
+            all_params = {'api_key':self.auth_key}
+
+        return all_params
 
     def set_data(self, data):
         """Set data after parsing."""
