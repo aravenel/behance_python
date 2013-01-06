@@ -41,7 +41,7 @@ class Behance(dict):
             _results = requests.get(url)
 
             if _results.status_code == 200:
-                return _results.json
+                return _results.json()
             else:
                 #Throw the error corresponding to the correct error code.
                 #If unknown error code, throw generic error.

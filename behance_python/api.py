@@ -24,7 +24,7 @@ class API:
 
             #Parse results
             if _results.status_code == 200:
-                return _results.json
+                return _results.json()
             else:
                 n = _results.status_code
                 try:
