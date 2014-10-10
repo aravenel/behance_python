@@ -23,6 +23,7 @@ class User(Behance):
         self.set_data(_results)
 
     def get_projects(self, **kwargs):
+
         _base_url = url_join(self.base_url, self.user_id, 'projects')
         if len(kwargs) > 0:
             _filters = urllib.urlencode(kwargs)
@@ -65,7 +66,7 @@ class User(Behance):
     def get_stats(self):
         _base_url = url_join(self.base_url, self.user_id, 'stats')
         _url = "%s?api_key=%s" % (_base_url, self.auth_key)
-        
+
         return self._parse_data(self._get_api_data(_url)['stats'])
 
     def get_followers(self, **kwargs):
@@ -88,14 +89,8 @@ class User(Behance):
 
         return self._parse_data(self._get_api_data(_url)['following'])
 
-    def get_feedback(self):
-        _base_url = url_join(self.base_url, self.user_id, 'feedback')
-        _url = "%s?api_key=%s" % (_base_url, self.auth_key)
-        
-        return self._parse_data(self._get_api_data(_url)['feedback_circle'])
-
     def get_work_experience(self):
         _base_url = url_join(self.base_url, self.user_id, 'work_experience')
         _url = "%s?api_key=%s" % (_base_url, self.auth_key)
-        
+
         return self._parse_data(self._get_api_data(_url)['work_experience'])

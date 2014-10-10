@@ -8,7 +8,7 @@ A Python wrapper for the Behance API
 
 ####Note that this library does not currently support any of the OAUTH based POST functionality. This functionality will be added in future releases.
 
-Please see [Behance API documentation](http://www.behance.net/dev) to get an 
+Please see [Behance API documentation](http://www.behance.net/dev) to get an
 API key and more information, including field names and example content.
 
 **Note**: Many Behance API endpoints provide data in pages of 12 items. You will
@@ -26,9 +26,9 @@ Or:
 All wrapper functionality flows from the main API object which must be
 instantiated using your Behance-provided API Key.
 
-All attributes can be accessed using either objects (object.key) or dict 
+All attributes can be accessed using either objects (object.key) or dict
 (object['key']) notation. **Beware!** Some of the JSON returned may have numerical
-keys, which Python cannot use for object notation--you will need to access these 
+keys, which Python cannot use for object notation--you will need to access these
 by their dict notation. Additionally, as JSON returns unicode, integer keys have
 been converted from unicode to ints to make life easier.
 
@@ -49,9 +49,9 @@ projects[0].owners[129052].first_name
 
 Supports all filters and modifiers as supported by Behance.
 
-Data will be returned as list of objects with same keys as Behance API. To save 
-on API calls, these are not full Project objects (i.e. they do not have all of 
-the attributes you would get from get_project())--you must call the 
+Data will be returned as list of objects with same keys as Behance API. To save
+on API calls, these are not full Project objects (i.e. they do not have all of
+the attributes you would get from get_project())--you must call the
 API.get_project(project_id) method to get project details including images.
 
 ###Get Single Project Details
@@ -63,7 +63,7 @@ len(project_images)
 ```
 
 Returns an instance of the Project object. This object has attributes named
-identically to attributes as returned by Behance API. As with the API, 
+identically to attributes as returned by Behance API. As with the API,
 artwork associated with a project are stored in Project.modules, which is a list
 of objects, each object representing one module and its corresponding
 metadata.
@@ -74,7 +74,7 @@ comments = proj.get_comments()
 comment[0].user.first_name
 >>> 'Matias'
 ```
-Method of the Project object. Returns list of objects, each object 
+Method of the Project object. Returns list of objects, each object
 representing a single comment and its metadata.
 
 ##User functionality
@@ -93,18 +93,18 @@ user.first_name
 >>> 'Matias'
 ```
 Returns User object. This object has attributes named identically to attributes
-as returned by Behance API. 
+as returned by Behance API.
 
 
 ###Get User Projects
 ```python
 user_projects = user.get_projects(filter_key='filter_value')
-user_projects[0].name 
+user_projects[0].name
 >>> 'The ALVA Award'
 ```
-Method of the User object. Returns list of objects. Can optionally include any 
-filters supported by Behance API. So as not to chew up API calls, these are not 
-actual Project objects. To get artwork associated with these projects, you will 
+Method of the User object. Returns list of objects. Can optionally include any
+filters supported by Behance API. So as not to chew up API calls, these are not
+actual Project objects. To get artwork associated with these projects, you will
 need to call the API.get_project(project_id) method.
 
 ###Get User Works in Progress
@@ -113,9 +113,9 @@ user_wips = user.get_wips(filter_key='filter_value')
 wips[0].latest_rev_id
 >>> '173'
 ```
-Method of the User object. Returns list of objects. Can optionally include any 
-filters supported by Behance API. So as not to chew up API calls, these are not 
-actual WIP objects. To get artwork associated with these projects, you will 
+Method of the User object. Returns list of objects. Can optionally include any
+filters supported by Behance API. So as not to chew up API calls, these are not
+actual WIP objects. To get artwork associated with these projects, you will
 need to call the API.get_WIP(wip_id) method.
 
 ###Get User Appreciations
@@ -162,14 +162,6 @@ following[0].username
 Method of the User object. Can optionally include any filters supported by Behance API.
 Returns list of objects.
 
-###Get User Feedback Circle
-```python
-feedback_circle = user.get_feedback()
-feedback[0].username
->>> 'getflourish'
-```
-Method of the User object. Returns list of objects.
-
 ###Get Work Experience
 ```python
 work_experience = user.get_work_experience()
@@ -194,7 +186,7 @@ wip.title
 >>> 'Portfolio Review Schedule Design'
 ```
 Returns WIP object. This object has attributes named identically to attributes
-as returned by Behance API. 
+as returned by Behance API.
 
 ###Get Revision
 ```python
@@ -203,7 +195,7 @@ rev.tags
 >>> ['behance', 'schedule', 'information']
 ```
 Works in progress store multiple revisions. Fetch individidual revisions with
-a revision ID. Method of the WIP object. 
+a revision ID. Method of the WIP object.
 
 ###Get Comments
 ```python
@@ -240,16 +232,16 @@ projects[0].name
 ```
 Returns list of projects that are members of a collection. Note that these are not actual
 Project instances to save on API calls--to get artwork for these, you would need to
-call API.get_project(project_id). Can optionally include any filters supported by 
+call API.get_project(project_id). Can optionally include any filters supported by
 Behance API.
 
 
 #Exceptions
 Unfortunately, they happen. If an exception happens in the calling of the API
-but before a response is returned (e.g. a timeout), the library will raise 
-the exception from the underlying Requests library. If the response from the 
-Behance API is anything other than status code 200, it will raise an exception 
-corresponding to the error code. These exceptions are all subclasses of the 
+but before a response is returned (e.g. a timeout), the library will raise
+the exception from the underlying Requests library. If the response from the
+Behance API is anything other than status code 200, it will raise an exception
+corresponding to the error code. These exceptions are all subclasses of the
 BehanceException, and they are:
 - Forbidden (403 error)
 - NotFound (404 error)

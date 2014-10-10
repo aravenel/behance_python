@@ -81,7 +81,7 @@ class TestUser(BehanceTestCase):
         for key in USER_KEYS:
             self.assertTrue(hasattr(user, key))
             self.assertTrue(user.has_key(key))
-    
+
     def test_user_projects(self):
         user = self.api.get_user(USER_NAME)
         projects = user.get_projects()
@@ -147,15 +147,6 @@ class TestUser(BehanceTestCase):
             self.assertTrue(hasattr(follow, 'id'))
             self.assertTrue(hasattr(follow, 'username'))
 
-    def test_user_feedback(self):
-        user = self.api.get_user(USER_NAME)
-        feedback = user.get_feedback()
-        KEYS = ['id', 'username', 'url']
-        for fb in feedback:
-            for key in KEYS:
-                self.assertTrue(fb.has_key(key))
-                self.assertTrue(hasattr(fb, key))
-
     def test_user_work_experience(self):
         user = self.api.get_user(USER_NAME)
         work_experience = user.get_work_experience()
@@ -212,7 +203,7 @@ class TestWIP(BehanceTestCase):
             wips = self.api.wip_search('apple')
 
 class TestCollection(BehanceTestCase):
-    
+
     def test_search(self):
         collections = self.api.collection_search('apple')
         self.assertGreaterEqual(len(collections), 1)
