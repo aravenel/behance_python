@@ -4,3 +4,4 @@ v0.2.1, Oct 5 2012 -- Tweaks to setup.py
 v0.2.2, Oct 5 2012 -- Added URL to setup.py
 v0.2.3, Jan 5 2012 -- Added user stats, follower, following, feedback, and work experience endpoints
 v0.2.4, Jan 6 2012 -- Updated to support and require Requests >=1.0.0
+v0.2.5, Oct 20 2014 -- Removed feedback circle support
