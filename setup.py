@@ -8,5 +8,5 @@ setup(
         license='MIT',
         author='Alex Ravenel',
         author_email='ravenel@gmail.com',
-        version='0.2.4',
+        version='0.3.0',
         )

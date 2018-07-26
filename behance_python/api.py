@@ -1,12 +1,12 @@
 import urllib
 import requests
 from behance_python import ENDPOINTS, url_join
-from project import Project
-from user import User
-from wip import WIP
-from collection import Collection
-from behance import Behance
-import exceptions
+from behance_python.project import Project
+from behance_python.user import User
+from behance_python.wip import WIP
+from behance_python.collection import Collection
+from behance_python.behance import Behance
+import behance_python.exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
 class API:

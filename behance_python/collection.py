@@ -1,5 +1,5 @@
 import urllib
-from behance import Behance
+from behance_python.behance import Behance
 from behance_python import ENDPOINTS, url_join
 
 class Collection(Behance):

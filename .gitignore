@@ -28,3 +28,7 @@ pip-log.txt
 
 *.swp
 venv
+.venv
+.venv2
+.idea
+env.sh

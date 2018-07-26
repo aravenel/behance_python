@@ -1,6 +1,6 @@
 import urllib
 from behance_python import ENDPOINTS, url_join
-from behance import Behance
+from behance_python.behance import Behance
 
 class WIP(Behance):
 

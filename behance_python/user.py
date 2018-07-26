@@ -1,5 +1,5 @@
 import urllib
-from behance import Behance
+from behance_python.behance import Behance
 from behance_python import ENDPOINTS, url_join
 
 #   TODO: Should get_projects return project objects? How to do this with min overhead?

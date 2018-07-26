@@ -9,7 +9,7 @@ ENDPOINTS = {
 def url_join(*args):
     return "/".join(str(s).strip('/') for s in args)
 
-from api import *
-from project import *
-from exceptions import *
-from behance import *
+from behance_python.api import *
+from behance_python.project import *
+from behance_python.exceptions import *
+from behance_python.behance import *
