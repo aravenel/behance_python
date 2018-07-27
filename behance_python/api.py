@@ -1,12 +1,12 @@
 import urllib
 import requests
 from behance_python import ENDPOINTS, url_join
-from project import Project
-from user import User
-from wip import WIP
-from collection import Collection
-from behance import Behance
-import exceptions
+from behance_python.project import Project
+from behance_python.user import User
+from behance_python.wip import WIP
+from behance_python.collection import Collection
+from behance_python.behance import Behance
+import behance_python.exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
 class API:
@@ -28,9 +28,9 @@ class API:
             else:
                 n = _results.status_code
                 try:
-                    raise getattr(exceptions, exceptions.EXCEPTIONMAPPING[n])(n)
+                    raise getattr(behance_python.exceptions, behance_python.exceptions.EXCEPTIONMAPPING[n])(n)
                 except AttributeError:
-                    raise exceptions.BehanceException(n)
+                    raise behance_python.exceptions.BehanceException(n)
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             raise e
 
@@ -58,8 +58,8 @@ class API:
         else:
             #Build the URL
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['project'])
-            _terms = "+".join(urllib.quote(arg) for arg in args)
-            _filters = urllib.urlencode(kwargs)
+            _terms = "+".join(urllib.parse.quote(arg) for arg in args)
+            _filters = urllib.parse.urlencode(kwargs)
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
@@ -73,8 +73,8 @@ class API:
             return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['user'])
-            _terms = "+".join(urllib.quote(arg) for arg in args)
-            _filters = urllib.urlencode(kwargs)
+            _terms = "+".join(urllib.parse.quote(arg) for arg in args)
+            _filters = urllib.parse.urlencode(kwargs)
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
@@ -88,8 +88,8 @@ class API:
             return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['wip'])
-            _terms = "+".join(urllib.quote(arg) for arg in args)
-            _filters = urllib.urlencode(kwargs)
+            _terms = "+".join(urllib.parse.quote(arg) for arg in args)
+            _filters = urllib.parse.urlencode(kwargs)
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API
@@ -103,8 +103,8 @@ class API:
             return None
         else:
             _base_url = url_join(ENDPOINTS['api'], ENDPOINTS['collection'])
-            _terms = "+".join(urllib.quote(arg) for arg in args)
-            _filters = urllib.urlencode(kwargs)
+            _terms = "+".join(urllib.parse.quote(arg) for arg in args)
+            _filters = urllib.parse.urlencode(kwargs)
             _url = '%s?api_key=%s&q=%s&%s' % (_base_url, self.auth_key, _terms, _filters)
 
             #Get results from API

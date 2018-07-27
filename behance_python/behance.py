@@ -1,5 +1,5 @@
 import requests
-import exceptions
+import behance_python.exceptions
 from requests.exceptions import ConnectionError, HTTPError, Timeout, TooManyRedirects
 
 class Behance(dict):
@@ -47,9 +47,9 @@ class Behance(dict):
                 #If unknown error code, throw generic error.
                 n = _results.status_code
                 try:
-                    raise getattr(exceptions, exceptions.EXCEPTIONMAPPING[n])(n)
+                    raise getattr(behance_python.exceptions, behance_python.exceptions.EXCEPTIONMAPPING[n])(n)
                 except AttributeError:
-                    raise exceptions.BehanceException(n)
+                    raise behance_python.exceptions.BehanceException(n)
         except (ConnectionError, HTTPError, Timeout, TooManyRedirects) as e:
             #If requests raises an exception
             raise e
@@ -62,7 +62,7 @@ class Behance(dict):
                 new_v = self._parse_data(v)
                 self.__setattr__(new_k, new_v)
         else:
-            raise TypeError, 'Expected a dict'
+            raise TypeError('Expected a dict')
 
     __getattr__ = dict.__getitem__
     __setattr__ = dict.__setitem__
